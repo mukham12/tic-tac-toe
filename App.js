@@ -1,10 +1,32 @@
-import React from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import {MaterialCommunityIcons as Icon} from 'react-native-vector-icons';
+import React from 'react'
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native'
+import {MaterialCommunityIcons as Icon} from 'react-native-vector-icons'
+
+function Row(props) {
+    return <View style={{flexDirection: "row"}}>
+        <TouchableOpacity style={styles.tile} onPress={props.onPress}>{props.renderIcon}</TouchableOpacity>
+        <TouchableOpacity style={styles.tile} onPress={props.onPress1}>{props.renderIcon1}</TouchableOpacity>
+        <TouchableOpacity style={styles.tile} onPress={props.onPress2}>{props.renderIcon2}</TouchableOpacity>
+    </View>;
+}
+
+function TicTacToeBoard(props) {
+    return <>
+        <Row onPress={props.onPress} renderIcon={props.renderIcon}
+             onPress1={props.onPress1} renderIcon1={props.renderIcon1}
+             onPress2={props.onPress2} renderIcon2={props.renderIcon2}/>
+        <Row onPress={props.onPress} renderIcon={props.renderIcon}
+             onPress1={props.onPress1} renderIcon1={props.renderIcon1}
+             onPress2={props.onPress2} renderIcon2={props.renderIcon2}/>
+        <Row onPress={props.onPress} renderIcon={props.renderIcon}
+             onPress1={props.onPress1} renderIcon1={props.renderIcon1}
+             onPress2={props.onPress2} renderIcon2={props.renderIcon2}/>
+    </>;
+}
 
 export default class App extends React.Component {
     constructor() {
-        super();
+        super()
         this.state = {
             gameState: [
                 [0, 0, 0],
@@ -64,69 +86,40 @@ export default class App extends React.Component {
             }
         }
         return 0
-    };
+    }
 
     displayWinner = () => {
         const winner = this.determineWinner();
         if (!this.state.gameState.flat().includes(0) || winner !== 0) {
             if (winner === -1) {
-                return <Text style={styles.winner}>{"O's WON!"}</Text>;
+                return <Text style={styles.winner}>{"O's WON!"}</Text>
             } else if (winner === 1) {
-                return <Text style={styles.winner}>{"X's WON!"}</Text>;
+                return <Text style={styles.winner}>{"X's WON!"}</Text>
             } else {
-                return <Text style={styles.winner}>{'IT IS A DRAW!'}</Text>;
+                return <Text style={styles.winner}>{'IT IS A DRAW!'}</Text>
             }
         }
-    };
+    }
 
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.text}>{'TIC-TAC-TOE'}</Text>
-                <View style={{flexDirection: 'row'}}>
-                    <TouchableOpacity style={styles.tile} onPress={() => this.onTilePress(0, 0)}>
-                        {this.renderIcon(0, 0)}
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.tile} onPress={() => this.onTilePress(0, 1)}>
-                        {this.renderIcon(0, 1)}
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.tile} onPress={() => this.onTilePress(0, 2)}>
-                        {this.renderIcon(0, 2)}
-                    </TouchableOpacity>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                    <TouchableOpacity style={styles.tile} onPress={() => this.onTilePress(1, 0)}>
-                        {this.renderIcon(1, 0)}
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.tile} onPress={() => this.onTilePress(1, 1)}>
-                        {this.renderIcon(1, 1)}
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.tile} onPress={() => this.onTilePress(1, 2)}>
-                        {this.renderIcon(1, 2)}
-                    </TouchableOpacity>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                    <TouchableOpacity style={styles.tile} onPress={() => this.onTilePress(2, 0)}>
-                        {this.renderIcon(2, 0)}
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.tile} onPress={() => this.onTilePress(2, 1)}>
-                        {this.renderIcon(2, 1)}
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.tile} onPress={() => this.onTilePress(2, 2)}>
-                        {this.renderIcon(2, 2)}
-                    </TouchableOpacity>
-                </View>
+                <Text style={styles.text}>TIC-TAC-TOE</Text>
+                <Text style={styles.turn}>{`Player ${this.state.currentPlayer < 0 ? 2 : 1}'s turn!`}</Text>
+                <TicTacToeBoard onPress={() => this.onTilePress(0, 0)} renderIcon={this.renderIcon(0, 0)}
+                                onPress1={() => this.onTilePress(0, 1)} renderIcon1={this.renderIcon(0, 1)}
+                                onPress2={() => this.onTilePress(0, 2)} renderIcon2={this.renderIcon(0, 2)}/>
                 <TouchableOpacity onPress={this.reset}><Text style={styles.reset}>{'RESET!'}</Text></TouchableOpacity>
                 {this.displayWinner()}
             </View>
-        );
+        )
     }
 }
 
 const styles = StyleSheet.create({
     text: {
-        marginTop: 100,
-        marginBottom: 40,
+        marginTop: 40,
+        marginBottom: 30,
         borderWidth: 3.2,
         padding: 4,
         borderColor: '#20232a',
@@ -169,10 +162,16 @@ const styles = StyleSheet.create({
         padding: 5,
     },
     winner: {
-        marginTop: 45,
+        marginTop: 35,
         borderWidth: 2.3,
         color: 'black',
         textAlign: 'center',
         fontSize: 50,
     },
-});
+    turn: {
+        marginBottom: 15,
+        color: '#ff1f4e',
+        textAlign: 'center',
+        fontSize: 35,
+    }
+})
