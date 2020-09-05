@@ -7,7 +7,7 @@ function Row(props) {
         <TouchableOpacity style={styles.tile} onPress={props.onPress}>{props.renderIcon}</TouchableOpacity>
         <TouchableOpacity style={styles.tile} onPress={props.onPress1}>{props.renderIcon1}</TouchableOpacity>
         <TouchableOpacity style={styles.tile} onPress={props.onPress2}>{props.renderIcon2}</TouchableOpacity>
-    </View>;
+    </View>
 }
 
 function TicTacToeBoard(props) {
@@ -21,7 +21,7 @@ function TicTacToeBoard(props) {
         <Row onPress={props.onPress} renderIcon={props.renderIcon}
              onPress1={props.onPress1} renderIcon1={props.renderIcon1}
              onPress2={props.onPress2} renderIcon2={props.renderIcon2}/>
-    </>;
+    </>
 }
 
 export default class App extends React.Component {
